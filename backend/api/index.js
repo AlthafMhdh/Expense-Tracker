@@ -3,6 +3,7 @@ import serverless from "serverless-http";
 import cors from "cors";
 import path from "path";
 import { fileURLToPath } from "url";
+import 'dotenv/config'; 
 
 import connectDB from "../config/db.js";
 import authRoutes from "../routes/authRoutes.js";
