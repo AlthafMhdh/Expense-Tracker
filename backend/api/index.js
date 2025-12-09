@@ -40,12 +40,13 @@
 // export const handler = serverless(app);
 
 
+// api/index.js
 import express from "express";
 import serverless from "serverless-http";
 import cors from "cors";
 import path from "path";
 import { fileURLToPath } from "url";
-import 'dotenv/config';
+import 'dotenv/config'; 
 
 import connectDB from "../config/db.js";
 import authRoutes from "../routes/authRoutes.js";
@@ -58,7 +59,7 @@ const __dirname = path.dirname(__filename);
 
 const app = express();
 
-// CORS
+// --- Middleware ---
 app.use(
   cors({
     origin: process.env.CLIENT_URL || "*",
@@ -67,29 +68,26 @@ app.use(
   })
 );
 
-// Body parser
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// --- STATIC UPLOAD FOLDER ---
-app.use("/uploads", express.static(path.join(__dirname, "../uploads")));
-
-// --- ROUTES ---
+// --- Routes ---
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/income", incomeRoutes);
 app.use("/api/v1/expense", expenseRoutes);
 app.use("/api/v1/dashboard", dashboardRoutes);
 
-// --- SERVERLESS HANDLER ---
-let cachedHandler;
+// --- STATIC UPLOAD FOLDER ---
+app.use("/uploads", express.static(path.join(__dirname, "../uploads")));
 
-export const handler = async (event, context) => {
-  // Connect to DB before handling requests
-  await connectDB();
+// --- Test Route ---
+app.get("/", (req, res) => {
+  res.json({ message: "ExpenseTracker API is working" });
+});
 
-  // Cache the serverless handler to avoid re-wrapping every request
-  if (!cachedHandler) cachedHandler = serverless(app);
+// --- Connect to MongoDB ---
+await connectDB();
 
-  return cachedHandler(event, context);
-};
+// --- Export wrapped with serverless ---
+export default serverless(app);
 
