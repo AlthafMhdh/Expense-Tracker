@@ -6,7 +6,6 @@ import { validateEmail } from "../../utils/helper";
 import axiosInstance from "../../utils/axiosInstance";
 import { API_PATHS } from "../../utils/apiPaths";
 import { UserContext } from "../../context/UserContext";
-import axios from "axios";
 
 const Login = () => {
     const [email, setEmail] = useState("");
@@ -33,18 +32,10 @@ const Login = () => {
         setError("");
 
         try {
-            // const response = await axiosInstance.post(API_PATHS.AUTH.LOGIN, {
-            //     email,
-            //     password
-            // });
-            const response = await axios.post(
-                "https://expense-trackify-server.vercel.app/test-login",
-                {
-                    email,
-                    password
-                }
-            );
-            console.log("...")
+            const response = await axiosInstance.post(API_PATHS.AUTH.LOGIN, {
+                email,
+                password
+            });
             const {token, user} = response.data;
 
             if (token) {
