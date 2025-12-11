@@ -72,7 +72,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // --- Routes ---
-app.use("/v1/auth", authRoutes);
+app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/income", incomeRoutes);
 app.use("/api/v1/expense", expenseRoutes);
 app.use("/api/v1/dashboard", dashboardRoutes);
@@ -80,20 +80,9 @@ app.use("/api/v1/dashboard", dashboardRoutes);
 // --- STATIC UPLOAD FOLDER ---
 app.use("/uploads", express.static(path.join(__dirname, "../uploads")));
 
-// --- Test Route ---
 app.get("/", (req, res) => {
-  res.json({ message: "ExpenseTracker API is working" });
-  console.log("ExpenseTracker API is working");
-});
-
-app.get("/v1/auth/login", (req, res) => {
-  res.json({ message: "Login working" });
-  console.log("Login working");
-});
-
-app.get("/api/v1/auth/login", (req, res) => {
-  res.json({ message: "Login" });
-  console.log("Login");
+  res.send("Expense Tracker Backend Running...");
+  console.log("Expense Tracker Backend Running...");
 });
 
 // --- Connect to MongoDB ---
