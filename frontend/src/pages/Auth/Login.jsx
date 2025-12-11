@@ -38,12 +38,13 @@ const Login = () => {
             //     password
             // });
             const response = await axios.post(
-                "https://expense-trackify-server.vercel.app/api/test-login",
+                "https://expense-trackify-server.vercel.app/test-login",
                 {
                     email,
                     password
                 }
             );
+            console.log("...")
             const {token, user} = response.data;
 
             if (token) {
