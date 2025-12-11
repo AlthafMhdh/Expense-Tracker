@@ -43,6 +43,7 @@ const connectDB = async () => {
       throw new Error("MONGO_URI is not defined in environment variables");
     }
     cached.promise = mongoose.connect(process.env.Mongodb_URl, {});
+    console.log("DB Connected");
   }
   cached.conn = await cached.promise;
   return cached.conn;

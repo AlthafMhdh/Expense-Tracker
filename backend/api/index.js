@@ -83,11 +83,17 @@ app.use("/uploads", express.static(path.join(__dirname, "../uploads")));
 // --- Test Route ---
 app.get("/", (req, res) => {
   res.json({ message: "ExpenseTracker API is working" });
+  console.log("ExpenseTracker API is working");
 });
 
 // --- Connect to MongoDB ---
 await connectDB();
 
 // --- Export wrapped with serverless ---
-export default serverless(app);
+//export default serverless(app);
+export const handler = serverless(app);
+export default handler;
 
+// app.listen(process.env.PORT || 8000, () => {
+//   console.log(`Server running on port ${process.env.PORT || 8000}`);
+// });

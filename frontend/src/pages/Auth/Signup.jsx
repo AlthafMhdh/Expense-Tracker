@@ -83,7 +83,10 @@ const Signup = () => {
 
                 <ProfilePhotoSelector image={profilePic} setImage={setProfilePic} />
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-4"> */}
+                <div className="flex flex-col md:grid md:grid-cols-2 gap-4">
+
+                    <div className="w-full">
                     <Input
                         value={fullName}
                         onChange={({target}) => setFullName(target.value)}
@@ -91,7 +94,9 @@ const Signup = () => {
                         placeholder="John Deo"
                         type="text"
                     />
+                    </div>
 
+                    <div className="w-full">
                     <Input
                         value={email}
                         onChange={({target}) => setEmail(target.value)}
@@ -99,8 +104,9 @@ const Signup = () => {
                         placeholder="john@example.com"
                         type="text"
                     />
+                    </div>
 
-                    <div className="col-span-2">
+                    <div className="col-span-2 w-full">
                         <Input
                             value={password}
                             onChange={({target}) => setPassword(target.value)}
