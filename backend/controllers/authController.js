@@ -131,9 +131,11 @@ export const loginUser = async (req, res) => {
   if (!email || !password) {
     return res.status(400).json({ message: "All fields are required" });
   }
+  console.log("Reached login route but error")
 
   try {
     const user = await User.findOne({ email });
+    console.log("Reached login route")
     // if (!user || !(await user.comparePassword(password))) {
     //   return res.status(400).json({ message: "Invalid credentials" });
     // }
@@ -153,7 +155,7 @@ export const loginUser = async (req, res) => {
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: "1d" });
 
     res.status(200).json({ user, token });
-    
+
   } catch (err) {
     res.status(500).json({
       message: "Error login user",
