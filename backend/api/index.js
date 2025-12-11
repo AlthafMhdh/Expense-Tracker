@@ -72,7 +72,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // --- Routes ---
-app.use("/v1/auth", authRoutes);
+app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/income", incomeRoutes);
 app.use("/api/v1/expense", expenseRoutes);
 app.use("/api/v1/dashboard", dashboardRoutes);
@@ -85,6 +85,38 @@ app.get("/", (req, res) => {
   res.json({ message: "ExpenseTracker API is working" });
   console.log("ExpenseTracker API is working");
 });
+
+// --- Test Login Route ---
+app.post("/test-login", async (req, res) => {
+  const { email, password } = req.body;
+
+  if (!email || !password) {
+    return res.status(400).json({ message: "All fields are required" });
+  }
+
+  try {
+    const user = await User.findOne({ email });
+    if (!user || !(await user.comparePassword(password))) {
+      return res.status(400).json({ message: "Invalid credentials" });
+    }
+
+    res.status(200).json({
+      message: "Login successful",
+      id: user._id,
+      user,
+      token: generateToken(user._id),
+    });
+
+    console.log(`Login successful for user: ${email}`);
+  } catch (err) {
+    res.status(500).json({
+      message: "Error login user",
+      error: err.message,
+    });
+    console.error("Login error:", err.message);
+  }
+});
+
 
 // --- Connect to MongoDB ---
 await connectDB();
