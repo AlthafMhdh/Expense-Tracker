@@ -86,6 +86,16 @@ app.get("/", (req, res) => {
   console.log("ExpenseTracker API is working");
 });
 
+app.get("/v1/auth/login", (req, res) => {
+  res.json({ message: "Login working" });
+  console.log("Login working");
+});
+
+app.get("/api/v1/auth/login", (req, res) => {
+  res.json({ message: "Login" });
+  console.log("Login");
+});
+
 // --- Connect to MongoDB ---
 await connectDB();
 
